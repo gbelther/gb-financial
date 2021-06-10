@@ -6,8 +6,10 @@ export const Container = styled.main`
   padding: 0.5rem 1rem;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
 `;
 
 export const ResumeItem = styled.section`
