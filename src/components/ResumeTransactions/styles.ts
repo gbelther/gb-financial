@@ -24,10 +24,10 @@ interface IItemValueProps {
 }
 
 function getColorByValue(value: number) {
-  if (value > 0) return "green";
-  if (value < 0) return "red";
+  if (value > 0) return "var(--green-600)";
+  if (value < 0) return "var(--red-600)";
 
-  return "black";
+  return "var(--black)";
 }
 
 export const ItemValue = styled(ItemTitle)<IItemValueProps>`
