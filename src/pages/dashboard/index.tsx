@@ -1,7 +1,9 @@
+import { Container, Title } from "./styles-dashboard";
+
 export default function Dashboard() {
   return (
-    <div>
-      <h1>Hello Dashboard</h1>
-    </div>
+    <Container>
+      <Title>Controle Financeiro</Title>
+    </Container>
   );
 }
