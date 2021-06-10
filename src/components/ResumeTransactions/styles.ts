@@ -5,15 +5,15 @@ export const Container = styled.main`
   border: 1px solid green;
   padding: 0.5rem 1rem;
 
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-auto-flow: row;
+  grid-gap: 0.25rem;
 `;
 
 export const ResumeItem = styled.section`
   display: flex;
+  justify-content: center;
   gap: 0.25rem;
 `;
 
