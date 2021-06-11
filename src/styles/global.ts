@@ -6,6 +6,11 @@ export const GlobalStyle = createGlobalStyle`
     --black: #000000;
 
     --gray-100: #EDF2F7;
+    --gray-300: #CBD5E0;
+    --gray-400: #A0AEC0;
+    --gray-600: #4A5568;
+    --gray-900: #171923;
+    --gray-700: #2D3748;
 
     --red-600: #C53030;
 
@@ -33,7 +38,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: var(----gray-100);
+    background: var(--gray-700);
   }
 
   body, input, textarea, button {
