@@ -2,7 +2,7 @@ import { useState } from "react";
 import { moneyFormat } from "../../util/numberFormat";
 import { Container, ItemTitle, ItemValue, ResumeItem } from "./styles";
 
-export default function ResumeTransactions() {
+export function ResumeTransactions() {
   const [quantity] = useState(23);
   const [deposit] = useState(2000);
   const [withdraw] = useState(-500);

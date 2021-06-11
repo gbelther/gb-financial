@@ -1,8 +1,11 @@
 import styled from "styled-components";
 
 export const Container = styled.main`
+  background: var(--gray-900);
+
   width: 100%;
-  border: 1px solid green;
+  border: 1px solid var(--gray-400);
+  border-radius: 5px;
   padding: 0.5rem 1rem;
 
   display: grid;
@@ -14,10 +17,12 @@ export const Container = styled.main`
 export const ResumeItem = styled.section`
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 0.25rem;
 `;
 
 export const ItemTitle = styled.p`
+  color: var(--gray-100);
   font-size: 1rem;
 `;
 
@@ -29,7 +34,7 @@ function getColorByValue(value: number) {
   if (value > 0) return "var(--green-600)";
   if (value < 0) return "var(--red-600)";
 
-  return "var(--black)";
+  return "var(--gray-100)";
 }
 
 export const ItemValue = styled(ItemTitle)<IItemValueProps>`
