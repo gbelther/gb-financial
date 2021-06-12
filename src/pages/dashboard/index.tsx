@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Header } from "../../components/Header";
+import { ModalTransaction } from "../../components/ModalTransaction/ModalTransaction";
 import { Transaction } from "../../components/Transaction";
 
 import {
@@ -11,12 +13,16 @@ import {
 } from "./styles-dashboard";
 
 export default function Dashboard() {
+  const [showModalTransaction, setShowModalTransaction] = useState(false);
+
   return (
     <Container>
       <Header />
       <Content>
         <InputsWrapper>
-          <Button>ADICIONAR</Button>
+          <Button onClick={() => setShowModalTransaction(true)}>
+            ADICIONAR
+          </Button>
           <InputFilter type="text" placeholder="Filtro" />
         </InputsWrapper>
         <TransactionsWrapper>
@@ -25,6 +31,12 @@ export default function Dashboard() {
           <Transaction />
         </TransactionsWrapper>
       </Content>
+      {showModalTransaction && (
+        <ModalTransaction
+          show={showModalTransaction}
+          onClose={() => setShowModalTransaction(false)}
+        />
+      )}
     </Container>
   );
 }
