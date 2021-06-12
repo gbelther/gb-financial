@@ -13,6 +13,8 @@ import {
   InputFilter,
   TransactionsWrapper,
 } from "./styles-dashboard";
+import { GetServerSideProps } from "next";
+import connectToDatabase from "../../util/mongodb";
 
 export default function Dashboard() {
   const [showModalTransaction, setShowModalTransaction] = useState(false);
@@ -45,3 +47,15 @@ export default function Dashboard() {
     </Container>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { db } = await connectToDatabase();
+
+  const data = await db.collection("transactions").find({}).toArray();
+
+  console.log(data);
+
+  return {
+    props: { data: JSON.parse(JSON.stringify(data)) },
+  };
+};
