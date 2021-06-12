@@ -1,5 +1,7 @@
 import { useState } from "react";
+
 import { Header } from "../../components/Header";
+import { SelectDate } from "../../components/SelectDate";
 import { ModalTransaction } from "../../components/ModalTransaction/ModalTransaction";
 import { Transaction } from "../../components/Transaction";
 
@@ -19,6 +21,9 @@ export default function Dashboard() {
     <Container>
       <Header />
       <Content>
+        <InputsWrapper>
+          <SelectDate />
+        </InputsWrapper>
         <InputsWrapper>
           <Button onClick={() => setShowModalTransaction(true)}>
             ADICIONAR

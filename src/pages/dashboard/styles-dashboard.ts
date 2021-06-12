@@ -22,12 +22,13 @@ export const Content = styled.main`
 `;
 
 export const InputsWrapper = styled.section`
-  width: 100%;
+  width: 70%;
 
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
 `;
 
@@ -51,9 +52,11 @@ export const InputFilter = styled.input`
   background: var(--gray-300);
   border: var(--gray-300);
   border-radius: 5px;
-  width: 500px;
+  max-width: 500px;
+  min-width: 220px;
   height: 2rem;
   font-size: 1.25rem;
+  flex-grow: 1;
   padding: 0 0.5rem;
 `;
 
