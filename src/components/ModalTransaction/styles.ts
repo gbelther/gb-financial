@@ -29,7 +29,7 @@ export const Content = styled.section`
 
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 
   &:last-child {
     margin-bottom: 1rem;
@@ -37,8 +37,6 @@ export const Content = styled.section`
 `;
 
 export const TransactionTypeWrapper = styled.div`
-  /* padding: 1rem 0; */
-
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -95,6 +93,8 @@ export const InputTextWrapper = styled.div`
   flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
+
+  position: relative;
 `;
 
 export const InfoInputText = styled.input`
@@ -109,6 +109,22 @@ export const ValueDateWrapper = styled.div`
   align-items: flex-end;
 `;
 
+export const ValueWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+
+  position: relative;
+`;
+
+export const DateWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+
+  position: relative;
+`;
+
 export const InfoInputNumber = styled.input`
   margin-left: 0.5rem;
   vertical-align: bottom;
@@ -116,6 +132,16 @@ export const InfoInputNumber = styled.input`
 
 export const InfoInputDate = styled.input`
   font-size: 1rem;
+`;
+
+export const Warning = styled.p`
+  color: var(--red-600);
+  font-size: 0.75rem;
+  font-weight: bold;
+
+  position: absolute;
+  bottom: -0.875rem;
+  right: 0;
 `;
 
 export const Footer = styled.section`

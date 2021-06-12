@@ -1,4 +1,9 @@
 import Modal from "react-modal";
+import { FormEvent } from "react";
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import { FiX } from "react-icons/fi";
 
@@ -14,16 +19,47 @@ import {
   InputTextWrapper,
   InfoInputText,
   ValueDateWrapper,
+  ValueWrapper,
+  DateWrapper,
   InfoInputNumber,
   InfoInputDate,
+  Warning,
   Footer,
   Button,
 } from "./styles";
-import { FormEvent } from "react";
+
+interface IFormInputs {
+  transactionType: string;
+  category: string;
+  description: string;
+  value: number;
+  date: string;
+}
+
+const schema = yup.object().shape({
+  transactionType: yup.string().required(),
+  category: yup.string().required("Necessário colocar categoria"),
+  description: yup.string().required("Necessário colocar a descrição"),
+  value: yup
+    .number()
+    .min(0, "Maior ou igual a zero")
+    .required("Valor absoluto maior ou igual a 0")
+    .typeError("Inválido"),
+  date: yup.string().required("Necessário colocar a data"),
+});
 
 export function ModalTransaction({ show, onClose }) {
-  function handleSubmitForm(event: FormEvent) {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInputs>({
+    resolver: yupResolver(schema),
+  });
+
+  function handleSubmitForm(data: IFormInputs) {
+    console.log(data);
+    onClose();
   }
 
   return (
@@ -41,7 +77,7 @@ export function ModalTransaction({ show, onClose }) {
         },
       }}
     >
-      <Container onSubmit={handleSubmitForm}>
+      <Container onSubmit={handleSubmit(handleSubmitForm)}>
         <Header>
           <h2>Adicionar Transação</h2>
           <CloseIcon size="1.5rem" onClick={onClose} />
@@ -53,29 +89,43 @@ export function ModalTransaction({ show, onClose }) {
                 id="deposit"
                 name="transactionType"
                 type="radio"
+                value="deposit"
                 defaultChecked
+                {...register("transactionType")}
               />
               <OptionText htmlFor="deposit">Receita</OptionText>
             </ItemType>
             <ItemType>
-              <OptionRadio id="withdraw" name="transactionType" type="radio" />
+              <OptionRadio
+                id="withdraw"
+                name="transactionType"
+                type="radio"
+                value="withdraw"
+                {...register("transactionType")}
+              />
               <OptionText htmlFor="withdraw">Despesa</OptionText>
             </ItemType>
           </TransactionTypeWrapper>
           <InputTextWrapper>
-            <InfoInputText type="text" required />
+            <InfoInputText {...register("category")} />
             <OptionText>Categoria</OptionText>
+            <Warning>{errors.category?.message}</Warning>
           </InputTextWrapper>
           <InputTextWrapper>
-            <InfoInputText type="text" required />
+            <InfoInputText {...register("description")} />
+            <Warning>{errors.description?.message}</Warning>
             <OptionText>Descrição</OptionText>
           </InputTextWrapper>
           <ValueDateWrapper>
-            <ValueDateWrapper>
+            <ValueWrapper>
               <OptionText>Valor</OptionText>
-              <InfoInputNumber type="number" required />
-            </ValueDateWrapper>
-            <InfoInputDate type="date" required />
+              <InfoInputNumber {...register("value")} defaultValue={0} />
+              <Warning>{errors.value?.message}</Warning>
+            </ValueWrapper>
+            <DateWrapper>
+              <InfoInputDate type="date" {...register("date")} />
+              <Warning>{errors.date?.message}</Warning>
+            </DateWrapper>
           </ValueDateWrapper>
         </Content>
         <Footer>
