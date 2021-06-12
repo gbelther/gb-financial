@@ -1,7 +1,14 @@
 import styled from "styled-components";
 
+interface IContainerTransaction {
+  value: number;
+}
+
 export const Container = styled.div`
   background: var(--gray-100);
+  border: 2px solid;
+  border-color: ${(props) =>
+    props.defaultValue >= 0 ? "var(--green-600)" : "var(--red-600)"};
   border-radius: 5px;
 
   display: flex;

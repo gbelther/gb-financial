@@ -26,9 +26,9 @@ export default function Dashboard() {
           <InputFilter type="text" placeholder="Filtro" />
         </InputsWrapper>
         <TransactionsWrapper>
-          <Transaction />
-          <Transaction />
-          <Transaction />
+          <Transaction value={1000} />
+          <Transaction value={-1000} />
+          <Transaction value={1000} />
         </TransactionsWrapper>
       </Content>
       {showModalTransaction && (
