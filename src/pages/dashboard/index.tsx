@@ -27,7 +27,7 @@ export default function Dashboard() {
         </InputsWrapper>
         <TransactionsWrapper>
           <Transaction value={1000} />
-          <Transaction value={-1000} />
+          <Transaction value={1000} />
           <Transaction value={1000} />
         </TransactionsWrapper>
       </Content>
