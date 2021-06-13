@@ -26,7 +26,8 @@ interface IDashboardProps {
 export default function Dashboard({ data }: IDashboardProps) {
   const [showModalTransaction, setShowModalTransaction] = useState(false);
 
-  const { setFilteredTransactions } = useContext(TransactionsContext);
+  const { filteredTransactions, setFilteredTransactions } =
+    useContext(TransactionsContext);
 
   useEffect(() => {
     setFilteredTransactions(data);
@@ -60,9 +61,9 @@ export default function Dashboard({ data }: IDashboardProps) {
           />
         </InputsWrapper>
         <TransactionsWrapper>
-          <Transaction value={1000} />
-          <Transaction value={1000} />
-          <Transaction value={1000} />
+          {filteredTransactions.map((transaction) => (
+            <Transaction transaction={transaction} />
+          ))}
         </TransactionsWrapper>
       </Content>
       {showModalTransaction && (

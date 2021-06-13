@@ -9,18 +9,21 @@ import {
 } from "./styles";
 
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { ITransaction } from "../../../types";
 
 interface ITransactionProps {
-  value: number;
+  transaction: ITransaction;
 }
 
-export function Transaction({ value }: ITransactionProps) {
+export function Transaction({ transaction }: ITransactionProps) {
+  const { value, description, category, day } = transaction;
+
   return (
     <Container defaultValue={value}>
-      <Day>01</Day>
+      <Day>{day}</Day>
       <ContentWrapper>
-        <Category>Mercado</Category>
-        <Description>Compras do mês no supermercado</Description>
+        <Category>{category}</Category>
+        <Description>{description}</Description>
       </ContentWrapper>
       <TransactionValueWrapper>R$ {value}</TransactionValueWrapper>
       <IconsWrapper>
