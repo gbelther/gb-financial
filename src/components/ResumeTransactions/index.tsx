@@ -1,11 +1,48 @@
+import { useEffect } from "react";
+import { useContext } from "react";
 import { useState } from "react";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 import { moneyFormat } from "../../util/numberFormat";
 import { Container, ItemTitle, ItemValue, ResumeItem } from "./styles";
 
 export function ResumeTransactions() {
-  const [quantity] = useState(23);
-  const [deposit] = useState(2000);
-  const [withdraw] = useState(-500);
+  const [quantity, setQuantity] = useState(0);
+  const [deposit, setDeposit] = useState(0);
+  const [withdraw, setWithdraw] = useState(0);
+
+  const { filteredTransactions } = useContext(TransactionsContext);
+
+  useEffect(() => {
+    if (filteredTransactions) {
+      const transactionsQuantity = filteredTransactions.length;
+
+      const transactionsDeposit = filteredTransactions.reduce(
+        (total, transaction) => {
+          if (transaction.type === "+") {
+            return total + transaction.value;
+          } else {
+            return 0;
+          }
+        },
+        0
+      );
+
+      const transactionsWithdraw = filteredTransactions.reduce(
+        (total, transaction) => {
+          if (transaction.type === "-") {
+            return total + transaction.value;
+          } else {
+            return 0;
+          }
+        },
+        0
+      );
+
+      setQuantity(transactionsQuantity);
+      setDeposit(transactionsDeposit);
+      setWithdraw(transactionsWithdraw);
+    }
+  }, [filteredTransactions]);
 
   return (
     <Container>
