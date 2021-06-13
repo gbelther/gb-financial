@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import { Header } from "../../components/Header";
 import { SelectDate } from "../../components/SelectDate";
@@ -16,6 +16,8 @@ import {
 import { GetServerSideProps } from "next";
 import connectToDatabase from "../../util/mongodb";
 import { ITransaction } from "../../../types";
+import { useContext } from "react";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 
 interface IDashboardProps {
   data: ITransaction[];
@@ -23,6 +25,22 @@ interface IDashboardProps {
 
 export default function Dashboard({ data }: IDashboardProps) {
   const [showModalTransaction, setShowModalTransaction] = useState(false);
+
+  const { setFilteredTransactions } = useContext(TransactionsContext);
+
+  useEffect(() => {
+    setFilteredTransactions(data);
+  }, [data]);
+
+  function handleFilter(event: ChangeEvent<HTMLInputElement>) {
+    const inputText = event.target.value;
+
+    const filtered = data.filter((transaction) =>
+      transaction.description.includes(inputText)
+    );
+
+    setFilteredTransactions(filtered);
+  }
 
   return (
     <Container>
@@ -35,7 +53,11 @@ export default function Dashboard({ data }: IDashboardProps) {
           <Button onClick={() => setShowModalTransaction(true)}>
             ADICIONAR
           </Button>
-          <InputFilter type="text" placeholder="Filtro" />
+          <InputFilter
+            type="text"
+            placeholder="Filtro"
+            onChange={handleFilter}
+          />
         </InputsWrapper>
         <TransactionsWrapper>
           <Transaction value={1000} />
