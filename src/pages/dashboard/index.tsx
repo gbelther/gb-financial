@@ -15,8 +15,13 @@ import {
 } from "./styles-dashboard";
 import { GetServerSideProps } from "next";
 import connectToDatabase from "../../util/mongodb";
+import { ITransaction } from "../../../types";
 
-export default function Dashboard() {
+interface IDashboardProps {
+  data: ITransaction[];
+}
+
+export default function Dashboard({ data }: IDashboardProps) {
   const [showModalTransaction, setShowModalTransaction] = useState(false);
 
   return (
@@ -51,9 +56,10 @@ export default function Dashboard() {
 export const getServerSideProps: GetServerSideProps = async () => {
   const { db } = await connectToDatabase();
 
-  const data = await db.collection("transactions").find({}).toArray();
-
-  console.log(data);
+  const data: ITransaction[] = await db
+    .collection("transactions")
+    .find({})
+    .toArray();
 
   return {
     props: { data: JSON.parse(JSON.stringify(data)) },
