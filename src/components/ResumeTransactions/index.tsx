@@ -56,12 +56,12 @@ export function ResumeTransactions() {
       </ResumeItem>
       <ResumeItem>
         <ItemTitle>Saídas:</ItemTitle>
-        <ItemValue value={withdraw}>{moneyFormat(withdraw)}</ItemValue>
+        <ItemValue value={-withdraw}>{`-${moneyFormat(withdraw)}`}</ItemValue>
       </ResumeItem>
       <ResumeItem>
         <ItemTitle>Balanço:</ItemTitle>
         <ItemValue value={deposit - withdraw}>
-          {moneyFormat(deposit + withdraw)}
+          {moneyFormat(deposit - withdraw)}
         </ItemValue>
       </ResumeItem>
     </Container>
