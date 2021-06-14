@@ -20,20 +20,22 @@ export function ResumeTransactions() {
         (total, transaction) => {
           if (transaction.type === "+") {
             return total + transaction.value;
-          } else {
-            return 0;
           }
+
+          return total;
         },
         0
       );
+
+      console.log(transactionsDeposit);
 
       const transactionsWithdraw = filteredTransactions.reduce(
         (total, transaction) => {
           if (transaction.type === "-") {
             return total + transaction.value;
-          } else {
-            return 0;
           }
+
+          return total;
         },
         0
       );
