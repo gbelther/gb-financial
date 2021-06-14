@@ -8,7 +8,7 @@ export function SelectDate() {
   const [dates, setDates] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState("");
 
-  const { allTransactions, setFilteredTransactions } =
+  const { allTransactions, setFilteredTransactionsByDate } =
     useContext(TransactionsContext);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export function SelectDate() {
   }, [allTransactions]);
 
   useEffect(() => {
-    setFilteredTransactions(
+    setFilteredTransactionsByDate(
       allTransactions.filter(
         (transactions) => transactions.yearMonth === selectedDate
       )

@@ -36,7 +36,7 @@ export const Select = styled.select`
 
   display: flex;
   justify-content: center;
-  padding-left: 1.5rem;
+  padding-left: 2.25rem;
 `;
 
 export const Option = styled.option`

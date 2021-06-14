@@ -26,8 +26,12 @@ interface IDashboardProps {
 export default function Dashboard({ data }: IDashboardProps) {
   const [showModalTransaction, setShowModalTransaction] = useState(false);
 
-  const { filteredTransactions, setAllTransactions, setFilteredTransactions } =
-    useContext(TransactionsContext);
+  const {
+    filteredTransactionsByDate,
+    filteredTransactions,
+    setAllTransactions,
+    setFilteredTransactions,
+  } = useContext(TransactionsContext);
 
   useEffect(() => {
     if (data) {
@@ -38,8 +42,10 @@ export default function Dashboard({ data }: IDashboardProps) {
   function handleFilter(event: ChangeEvent<HTMLInputElement>) {
     const inputText = event.target.value;
 
-    const filtered = data.filter((transaction) =>
-      transaction.description.includes(inputText)
+    const filtered = filteredTransactionsByDate.filter((transaction) =>
+      transaction.description
+        .toLocaleLowerCase()
+        .includes(inputText.toLocaleLowerCase())
     );
 
     setFilteredTransactions(filtered);
