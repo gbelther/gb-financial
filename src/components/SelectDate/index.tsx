@@ -52,7 +52,12 @@ export function SelectDate() {
 
   return (
     <Container>
-      <Button onClick={handlePreviousDate}>{"<"}</Button>
+      <Button
+        onClick={handlePreviousDate}
+        disabled={dates.findIndex((date) => date === selectedDate) === 0}
+      >
+        {"<"}
+      </Button>
       <Select value={selectedDate} onChange={handleSelectDate}>
         {dates.map((date) => (
           <Option key={date} value={date}>
@@ -60,7 +65,14 @@ export function SelectDate() {
           </Option>
         ))}
       </Select>
-      <Button onClick={handleNextDate}>{">"}</Button>
+      <Button
+        onClick={handleNextDate}
+        disabled={
+          dates.findIndex((date) => date === selectedDate) >= dates.length - 1
+        }
+      >
+        {">"}
+      </Button>
     </Container>
   );
 }

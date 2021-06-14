@@ -21,6 +21,11 @@ export const Button = styled.button`
   &:hover {
     filter: brightness(0.7);
   }
+
+  &:disabled {
+    filter: none;
+    cursor: not-allowed;
+  }
 `;
 
 export const Select = styled.select`
