@@ -26,12 +26,14 @@ interface IDashboardProps {
 export default function Dashboard({ data }: IDashboardProps) {
   const [showModalTransaction, setShowModalTransaction] = useState(false);
 
-  const { filteredTransactions, setFilteredTransactions } =
+  const { filteredTransactions, setAllTransactions, setFilteredTransactions } =
     useContext(TransactionsContext);
 
   useEffect(() => {
-    setFilteredTransactions(data);
-  }, [data]);
+    if (data) {
+      setAllTransactions(data);
+    }
+  }, []);
 
   function handleFilter(event: ChangeEvent<HTMLInputElement>) {
     const inputText = event.target.value;

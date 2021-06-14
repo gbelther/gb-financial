@@ -1,16 +1,66 @@
+import { ChangeEvent, MouseEvent, useEffect } from "react";
+import { useContext } from "react";
+import { useState } from "react";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 import { Container, Button, Select, Option } from "./styles";
 
 export function SelectDate() {
+  const [dates, setDates] = useState<string[]>([]);
+  const [selectedDate, setSelectedDate] = useState("");
+
+  const { allTransactions, setFilteredTransactions } =
+    useContext(TransactionsContext);
+
+  useEffect(() => {
+    const alldates = new Set(
+      allTransactions.map((transaction) => transaction.yearMonth)
+    );
+
+    setDates(Array.from(alldates));
+    setSelectedDate(Array.from(alldates)[0]);
+  }, [allTransactions]);
+
+  useEffect(() => {
+    setFilteredTransactions(
+      allTransactions.filter(
+        (transactions) => transactions.yearMonth === selectedDate
+      )
+    );
+  }, [selectedDate]);
+
+  function handleSelectDate(event: ChangeEvent<HTMLSelectElement>) {
+    const date = event.target.value;
+
+    setSelectedDate(date);
+  }
+
+  function handlePreviousDate() {
+    const dateIndex = dates.findIndex((date) => date === selectedDate);
+
+    if (dateIndex > 0) {
+      setSelectedDate(dates[dateIndex - 1]);
+    }
+  }
+
+  function handleNextDate() {
+    const dateIndex = dates.findIndex((date) => date === selectedDate);
+
+    if (dateIndex < dates.length - 1) {
+      setSelectedDate(dates[dateIndex + 1]);
+    }
+  }
+
   return (
     <Container>
-      <Button>{"<"}</Button>
-      <Select>
-        <Option value="">12/11/2020</Option>
-        <Option value="">12/11/2020</Option>
-        <Option value="">12/11/2020</Option>
-        <Option value="">12/11/2020</Option>
+      <Button onClick={handlePreviousDate}>{"<"}</Button>
+      <Select value={selectedDate} onChange={handleSelectDate}>
+        {dates.map((date) => (
+          <Option key={date} value={date}>
+            {date}
+          </Option>
+        ))}
       </Select>
-      <Button>{">"}</Button>
+      <Button onClick={handleNextDate}>{">"}</Button>
     </Container>
   );
 }
