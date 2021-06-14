@@ -26,7 +26,9 @@ export function Transaction({ transaction }: ITransactionProps) {
         <Category>{category}</Category>
         <Description>{description}</Description>
       </ContentWrapper>
-      <TransactionValueWrapper>{moneyFormat(value)}</TransactionValueWrapper>
+      <TransactionValueWrapper>{`${type === "-" ? "-" : ""}${moneyFormat(
+        value
+      )}`}</TransactionValueWrapper>
       <IconsWrapper>
         <FiEdit size="1.25rem" />
         <FiTrash2 size="1.25rem" />
