@@ -17,10 +17,10 @@ interface ITransactionProps {
 }
 
 export function Transaction({ transaction }: ITransactionProps) {
-  const { value, description, category, day } = transaction;
+  const { value, description, category, day, type } = transaction;
 
   return (
-    <Container defaultValue={value}>
+    <Container defaultValue={type === "-" ? -value : value}>
       <Day>{day}</Day>
       <ContentWrapper>
         <Category>{category}</Category>
