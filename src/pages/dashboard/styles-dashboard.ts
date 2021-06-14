@@ -62,6 +62,14 @@ export const InputFilter = styled.input`
 
 export const TransactionsWrapper = styled.section`
   width: 100%;
+  height: 70vh;
+
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
   display: flex;
   flex-direction: column;
