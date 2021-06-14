@@ -10,6 +10,7 @@ import {
 
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { ITransaction } from "../../../types";
+import { moneyFormat } from "../../util/numberFormat";
 
 interface ITransactionProps {
   transaction: ITransaction;
@@ -25,7 +26,7 @@ export function Transaction({ transaction }: ITransactionProps) {
         <Category>{category}</Category>
         <Description>{description}</Description>
       </ContentWrapper>
-      <TransactionValueWrapper>R$ {value}</TransactionValueWrapper>
+      <TransactionValueWrapper>{moneyFormat(value)}</TransactionValueWrapper>
       <IconsWrapper>
         <FiEdit size="1.25rem" />
         <FiTrash2 size="1.25rem" />
