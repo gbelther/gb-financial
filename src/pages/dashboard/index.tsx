@@ -78,6 +78,7 @@ export default function Dashboard({ data }: IDashboardProps) {
         <ModalTransaction
           show={showModalTransaction}
           onClose={() => setShowModalTransaction(false)}
+          type="POST"
         />
       )}
     </Container>

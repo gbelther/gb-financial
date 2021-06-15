@@ -9,6 +9,7 @@ interface ITransactionsContext {
   setAllTransactions: (transactions: ITransaction[]) => void;
   setFilteredTransactionsByDate: (transactions: ITransaction[]) => void;
   setFilteredTransactions: (transactions: ITransaction[]) => void;
+  addTransaction: (transaction: ITransaction) => void;
 }
 
 interface ITransactionsProvider {
@@ -34,6 +35,10 @@ export const TransactionsProvider = ({ children }: ITransactionsProvider) => {
     setFilteredTransactions(filteredTransactionsByDate);
   }, [filteredTransactionsByDate]);
 
+  function addTransaction(transaction: ITransaction) {
+    setAllTransactions([...allTransactions, transaction]);
+  }
+
   return (
     <TransactionsContext.Provider
       value={{
@@ -43,6 +48,7 @@ export const TransactionsProvider = ({ children }: ITransactionsProvider) => {
         setAllTransactions,
         setFilteredTransactionsByDate,
         setFilteredTransactions,
+        addTransaction,
       }}
     >
       {children}

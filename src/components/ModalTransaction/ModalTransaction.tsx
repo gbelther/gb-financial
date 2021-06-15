@@ -25,6 +25,9 @@ import {
   Footer,
   Button,
 } from "./styles";
+import { api } from "../../services/api";
+import { useContext } from "react";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 
 interface IFormInputs {
   transactionType: string;
@@ -32,6 +35,12 @@ interface IFormInputs {
   description: string;
   value: number;
   date: string;
+}
+
+interface IModalTransactionProps {
+  show: boolean;
+  onClose: () => void;
+  type: "POST" | "PUT";
 }
 
 const schema = yup.object().shape({
@@ -46,7 +55,11 @@ const schema = yup.object().shape({
   date: yup.string().required("Necessário colocar a data"),
 });
 
-export function ModalTransaction({ show, onClose }) {
+export function ModalTransaction({
+  show,
+  onClose,
+  type,
+}: IModalTransactionProps) {
   const {
     register,
     handleSubmit,
@@ -55,8 +68,26 @@ export function ModalTransaction({ show, onClose }) {
     resolver: yupResolver(schema),
   });
 
-  function handleSubmitForm(data: IFormInputs) {
-    console.log(data);
+  const { addTransaction } = useContext(TransactionsContext);
+
+  async function handleSubmitForm(data: IFormInputs) {
+    const { date, value, description, category, transactionType } = data;
+
+    if (type === "POST") {
+      const response = await api.post("/transaction", {
+        description,
+        value,
+        category,
+        year: Number(date.slice(0, 4)),
+        month: Number(date.slice(5, 7)),
+        day: Number(date.slice(8, 10)),
+        yearMonth: date.slice(0, 7),
+        yearMonthDay: date,
+      });
+
+      addTransaction(response.data);
+    }
+
     onClose();
   }
 
@@ -87,7 +118,7 @@ export function ModalTransaction({ show, onClose }) {
                 id="deposit"
                 name="transactionType"
                 type="radio"
-                value="deposit"
+                value="+"
                 defaultChecked
                 {...register("transactionType")}
               />
@@ -98,7 +129,7 @@ export function ModalTransaction({ show, onClose }) {
                 id="withdraw"
                 name="transactionType"
                 type="radio"
-                value="withdraw"
+                value="-"
                 {...register("transactionType")}
               />
               <OptionText htmlFor="withdraw">Despesa</OptionText>
