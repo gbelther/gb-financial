@@ -27,8 +27,6 @@ export function ResumeTransactions() {
         0
       );
 
-      console.log(transactionsDeposit);
-
       const transactionsWithdraw = filteredTransactions.reduce(
         (total, transaction) => {
           if (transaction.type === "-") {

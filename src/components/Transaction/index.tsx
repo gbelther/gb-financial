@@ -1,3 +1,5 @@
+import { ModalTransaction } from "../ModalTransaction/ModalTransaction";
+
 import {
   Container,
   Day,
@@ -11,13 +13,27 @@ import {
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { ITransaction } from "../../../types";
 import { moneyFormat } from "../../util/numberFormat";
+import { api } from "../../services/api";
+import { useState } from "react";
 
 interface ITransactionProps {
   transaction: ITransaction;
 }
 
 export function Transaction({ transaction }: ITransactionProps) {
-  const { value, description, category, day, type } = transaction;
+  const [showModalTransaction, setShowModalTransaction] = useState(false);
+
+  const { _id, value, description, category, day, type } = transaction;
+
+  async function handleDeleteTransaction() {
+    try {
+      const response = await api.delete(`/transaction/${_id}`);
+
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Container defaultValue={type === "-" ? -value : value}>
@@ -30,9 +46,17 @@ export function Transaction({ transaction }: ITransactionProps) {
         value
       )}`}</TransactionValueWrapper>
       <IconsWrapper>
-        <FiEdit size="1.25rem" />
-        <FiTrash2 size="1.25rem" />
+        <FiEdit size="1.25rem" onClick={() => setShowModalTransaction(true)} />
+        <FiTrash2 size="1.25rem" onClick={handleDeleteTransaction} />
       </IconsWrapper>
+      {showModalTransaction && (
+        <ModalTransaction
+          show={showModalTransaction}
+          onClose={() => setShowModalTransaction(false)}
+          type="PUT"
+          transaction={transaction}
+        />
+      )}
     </Container>
   );
 }

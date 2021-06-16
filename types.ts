@@ -1,5 +1,5 @@
 export interface ITransaction {
-  id: string;
+  _id: string;
   description: string;
   value: number;
   category: string;

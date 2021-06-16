@@ -70,7 +70,7 @@ export default function Dashboard({ data }: IDashboardProps) {
         </InputsWrapper>
         <TransactionsWrapper>
           {filteredTransactions.map((transaction) => (
-            <Transaction transaction={transaction} />
+            <Transaction key={transaction._id} transaction={transaction} />
           ))}
         </TransactionsWrapper>
       </Content>

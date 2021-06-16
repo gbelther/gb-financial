@@ -28,6 +28,7 @@ import {
 import { api } from "../../services/api";
 import { useContext } from "react";
 import { TransactionsContext } from "../../contexts/TransactionsContext";
+import { ITransaction } from "../../../types";
 
 interface IFormInputs {
   transactionType: string;
@@ -41,6 +42,7 @@ interface IModalTransactionProps {
   show: boolean;
   onClose: () => void;
   type: "POST" | "PUT";
+  transaction?: ITransaction;
 }
 
 const schema = yup.object().shape({
@@ -59,6 +61,7 @@ export function ModalTransaction({
   show,
   onClose,
   type,
+  transaction,
 }: IModalTransactionProps) {
   const {
     register,
@@ -83,9 +86,24 @@ export function ModalTransaction({
         day: Number(date.slice(8, 10)),
         yearMonth: date.slice(0, 7),
         yearMonthDay: date,
+        transactionType,
       });
 
       addTransaction(response.data);
+    }
+
+    if (type === "PUT") {
+      const response = await api.put(`/transaction/${transaction._id}`, {
+        description,
+        value,
+        category,
+        year: Number(date.slice(0, 4)),
+        month: Number(date.slice(5, 7)),
+        day: Number(date.slice(8, 10)),
+        yearMonth: date.slice(0, 7),
+        yearMonthDay: date,
+        transactionType,
+      });
     }
 
     onClose();
@@ -119,7 +137,9 @@ export function ModalTransaction({
                 name="transactionType"
                 type="radio"
                 value="+"
-                defaultChecked
+                defaultChecked={
+                  type === "PUT" ? transaction.type === "+" : true
+                }
                 {...register("transactionType")}
               />
               <OptionText htmlFor="deposit">Receita</OptionText>
@@ -130,29 +150,45 @@ export function ModalTransaction({
                 name="transactionType"
                 type="radio"
                 value="-"
+                defaultChecked={
+                  type === "PUT" ? transaction.type === "-" : false
+                }
                 {...register("transactionType")}
               />
               <OptionText htmlFor="withdraw">Despesa</OptionText>
             </ItemType>
           </TransactionTypeWrapper>
           <InputTextWrapper>
-            <InfoInputText {...register("category")} />
+            <InfoInputText
+              {...register("category")}
+              defaultValue={type === "PUT" ? transaction.category : ""}
+            />
             <OptionText>Categoria</OptionText>
             <Warning>{errors.category?.message}</Warning>
           </InputTextWrapper>
           <InputTextWrapper>
-            <InfoInputText {...register("description")} />
+            <InfoInputText
+              {...register("description")}
+              defaultValue={type === "PUT" ? transaction.description : ""}
+            />
             <Warning>{errors.description?.message}</Warning>
             <OptionText>Descrição</OptionText>
           </InputTextWrapper>
           <ValueDateWrapper>
             <ValueWrapper>
               <OptionText>Valor</OptionText>
-              <InfoInputNumber {...register("value")} defaultValue={0} />
+              <InfoInputNumber
+                {...register("value")}
+                defaultValue={type === "PUT" ? transaction.value : 0}
+              />
               <Warning>{errors.value?.message}</Warning>
             </ValueWrapper>
             <DateWrapper>
-              <InfoInputDate type="date" {...register("date")} />
+              <InfoInputDate
+                type="date"
+                {...register("date")}
+                defaultValue={type === "PUT" ? transaction.yearMonthDay : ""}
+              />
               <Warning>{errors.date?.message}</Warning>
             </DateWrapper>
           </ValueDateWrapper>
