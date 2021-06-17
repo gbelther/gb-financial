@@ -17,8 +17,11 @@ export function SelectDate() {
     );
 
     setDates(Array.from(alldates));
-    setSelectedDate(Array.from(alldates)[0]);
   }, [allTransactions]);
+
+  useEffect(() => {
+    setSelectedDate(dates[1]);
+  }, [dates]);
 
   useEffect(() => {
     setFilteredTransactionsByDate(
