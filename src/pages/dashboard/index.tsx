@@ -91,6 +91,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const data: ITransaction[] = await db
     .collection("transactions")
     .find({})
+    .sort({ year: 1, month: 1, day: 1 })
     .toArray();
 
   return {
