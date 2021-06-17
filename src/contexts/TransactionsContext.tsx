@@ -11,6 +11,7 @@ interface ITransactionsContext {
   setFilteredTransactions: (transactions: ITransaction[]) => void;
   addTransaction: (transaction: ITransaction) => void;
   deleteTransaction: (transactionId: string) => void;
+  editTransaction: (editedTransaction: ITransaction) => void;
 }
 
 interface ITransactionsProvider {
@@ -60,6 +61,18 @@ export const TransactionsProvider = ({ children }: ITransactionsProvider) => {
     }
   }
 
+  function editTransaction(editedTransaction: ITransaction) {
+    setAllTransactions((prevTransactions) =>
+      prevTransactions.map((transaction) => {
+        if (transaction._id === editedTransaction._id) {
+          return editedTransaction;
+        }
+
+        return transaction;
+      })
+    );
+  }
+
   return (
     <TransactionsContext.Provider
       value={{
@@ -71,6 +84,7 @@ export const TransactionsProvider = ({ children }: ITransactionsProvider) => {
         setFilteredTransactions,
         addTransaction,
         deleteTransaction,
+        editTransaction,
       }}
     >
       {children}

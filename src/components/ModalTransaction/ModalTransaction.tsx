@@ -75,7 +75,7 @@ export function ModalTransaction({
     resolver: yupResolver(schema),
   });
 
-  const { addTransaction } = useContext(TransactionsContext);
+  const { addTransaction, editTransaction } = useContext(TransactionsContext);
 
   async function handleSubmitForm(data: IFormInputs) {
     setIsLoading(true);
@@ -110,6 +110,8 @@ export function ModalTransaction({
         yearMonthDay: date,
         transactionType,
       });
+
+      editTransaction(response.data);
     }
 
     onClose();
