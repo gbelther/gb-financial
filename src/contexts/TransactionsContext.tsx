@@ -10,6 +10,7 @@ interface ITransactionsContext {
   setFilteredTransactionsByDate: (transactions: ITransaction[]) => void;
   setFilteredTransactions: (transactions: ITransaction[]) => void;
   addTransaction: (transaction: ITransaction) => void;
+  deleteTransaction: (transactionId: string) => void;
 }
 
 interface ITransactionsProvider {
@@ -49,6 +50,16 @@ export const TransactionsProvider = ({ children }: ITransactionsProvider) => {
     );
   }
 
+  function deleteTransaction(transactionId: string) {
+    const updatedAllTransactions = allTransactions.filter(
+      (transaction) => transaction._id !== transactionId
+    );
+
+    if (updatedAllTransactions) {
+      setAllTransactions(updatedAllTransactions);
+    }
+  }
+
   return (
     <TransactionsContext.Provider
       value={{
@@ -59,6 +70,7 @@ export const TransactionsProvider = ({ children }: ITransactionsProvider) => {
         setFilteredTransactionsByDate,
         setFilteredTransactions,
         addTransaction,
+        deleteTransaction,
       }}
     >
       {children}

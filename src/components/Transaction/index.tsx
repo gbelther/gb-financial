@@ -15,6 +15,8 @@ import { ITransaction } from "../../../types";
 import { moneyFormat } from "../../util/numberFormat";
 import { api } from "../../services/api";
 import { useState } from "react";
+import { useContext } from "react";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 
 interface ITransactionProps {
   transaction: ITransaction;
@@ -23,13 +25,17 @@ interface ITransactionProps {
 export function Transaction({ transaction }: ITransactionProps) {
   const [showModalTransaction, setShowModalTransaction] = useState(false);
 
+  const { deleteTransaction } = useContext(TransactionsContext);
+
   const { _id, value, description, category, day, type } = transaction;
 
   async function handleDeleteTransaction() {
     try {
       const response = await api.delete(`/transaction/${_id}`);
 
-      console.log(response);
+      if (response) {
+        deleteTransaction(_id);
+      }
     } catch (err) {
       console.log(err);
     }
