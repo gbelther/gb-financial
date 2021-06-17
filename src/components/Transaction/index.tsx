@@ -12,6 +12,8 @@ import {
   DeleteIcon,
 } from "./styles";
 
+import Loader from "react-loader-spinner";
+
 import { ITransaction } from "../../../types";
 import { moneyFormat } from "../../util/numberFormat";
 import { api } from "../../services/api";
@@ -25,12 +27,14 @@ interface ITransactionProps {
 
 export function Transaction({ transaction }: ITransactionProps) {
   const [showModalTransaction, setShowModalTransaction] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { deleteTransaction } = useContext(TransactionsContext);
 
   const { _id, value, description, category, day, type } = transaction;
 
   async function handleDeleteTransaction() {
+    setIsLoading(true);
     try {
       const response = await api.delete(`/transaction/${_id}`);
 
@@ -40,6 +44,8 @@ export function Transaction({ transaction }: ITransactionProps) {
     } catch (err) {
       console.log(err);
     }
+
+    setIsLoading(false);
   }
 
   return (
@@ -53,11 +59,17 @@ export function Transaction({ transaction }: ITransactionProps) {
         value
       )}`}</TransactionValueWrapper>
       <IconsWrapper>
-        <EditIcon
-          size="1.25rem"
-          onClick={() => setShowModalTransaction(true)}
-        />
-        <DeleteIcon size="1.25rem" onClick={handleDeleteTransaction} />
+        {isLoading ? (
+          <Loader type="Oval" width={30} height={30} color="blue" />
+        ) : (
+          <>
+            <EditIcon
+              size="1.25rem"
+              onClick={() => setShowModalTransaction(true)}
+            />
+            <DeleteIcon size="1.25rem" onClick={handleDeleteTransaction} />
+          </>
+        )}
       </IconsWrapper>
       {showModalTransaction && (
         <ModalTransaction

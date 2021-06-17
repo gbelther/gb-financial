@@ -1,5 +1,7 @@
 import Modal from "react-modal";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
+
+import Loader from "react-loader-spinner";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -63,6 +65,8 @@ export function ModalTransaction({
   type,
   transaction,
 }: IModalTransactionProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -74,6 +78,8 @@ export function ModalTransaction({
   const { addTransaction } = useContext(TransactionsContext);
 
   async function handleSubmitForm(data: IFormInputs) {
+    setIsLoading(true);
+
     const { date, value, description, category, transactionType } = data;
 
     if (type === "POST") {
@@ -107,6 +113,8 @@ export function ModalTransaction({
     }
 
     onClose();
+
+    setIsLoading(false);
   }
 
   return (
@@ -197,7 +205,13 @@ export function ModalTransaction({
           <Button type="button" onClick={onClose}>
             CANCELAR
           </Button>
-          <Button type="submit">CONFIRMAR</Button>
+          <Button type="submit">
+            {isLoading ? (
+              <Loader type="Oval" width={20} height={20} color="blue" />
+            ) : (
+              "CONFIRMAR"
+            )}
+          </Button>
         </Footer>
       </Container>
     </Modal>
