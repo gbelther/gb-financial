@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-interface IContainerTransaction {
-  value: number;
-}
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 
 export const Container = styled.div`
   background: var(--gray-100);
@@ -61,4 +59,12 @@ export const IconsWrapper = styled.section`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+`;
+
+export const EditIcon = styled(FiEdit)`
+  cursor: pointer;
+`;
+
+export const DeleteIcon = styled(FiTrash2)`
+  cursor: pointer;
 `;

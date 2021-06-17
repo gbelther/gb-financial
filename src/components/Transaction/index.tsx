@@ -8,9 +8,10 @@ import {
   Description,
   TransactionValueWrapper,
   IconsWrapper,
+  EditIcon,
+  DeleteIcon,
 } from "./styles";
 
-import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { ITransaction } from "../../../types";
 import { moneyFormat } from "../../util/numberFormat";
 import { api } from "../../services/api";
@@ -52,8 +53,11 @@ export function Transaction({ transaction }: ITransactionProps) {
         value
       )}`}</TransactionValueWrapper>
       <IconsWrapper>
-        <FiEdit size="1.25rem" onClick={() => setShowModalTransaction(true)} />
-        <FiTrash2 size="1.25rem" onClick={handleDeleteTransaction} />
+        <EditIcon
+          size="1.25rem"
+          onClick={() => setShowModalTransaction(true)}
+        />
+        <DeleteIcon size="1.25rem" onClick={handleDeleteTransaction} />
       </IconsWrapper>
       {showModalTransaction && (
         <ModalTransaction

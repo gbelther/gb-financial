@@ -20,7 +20,7 @@ export function SelectDate() {
   }, [allTransactions]);
 
   useEffect(() => {
-    setSelectedDate(dates[1]);
+    setSelectedDate(dates[0]);
   }, [dates]);
 
   useEffect(() => {
