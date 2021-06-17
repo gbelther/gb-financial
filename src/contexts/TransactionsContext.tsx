@@ -31,12 +31,22 @@ export const TransactionsProvider = ({ children }: ITransactionsProvider) => {
     setFilteredTransactionsByDate(allTransactions);
   }, [allTransactions]);
 
+  // useEffect(() => {
+  //   const allTransactionsSorted = allTransactions.sort(
+  //     (a, b) => +new Date(a.yearMonthDay) - +new Date(b.yearMonthDay)
+  //   );
+  // }, [allTransactions]);
+
   useEffect(() => {
     setFilteredTransactions(filteredTransactionsByDate);
   }, [filteredTransactionsByDate]);
 
   function addTransaction(transaction: ITransaction) {
-    setAllTransactions([...allTransactions, transaction]);
+    setAllTransactions(
+      [...allTransactions, transaction].sort(
+        (a, b) => +new Date(a.yearMonthDay) - +new Date(b.yearMonthDay)
+      )
+    );
   }
 
   return (
