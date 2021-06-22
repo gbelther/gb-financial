@@ -9,7 +9,7 @@ export const Container = styled.main`
   align-items: center;
 `;
 
-export const LoginWrapper = styled.form`
+export const SignWrapper = styled.form`
   background: var(--gray-400);
   border-radius: 5px;
   padding: 1rem 1.5rem;
