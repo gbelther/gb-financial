@@ -4,6 +4,10 @@ Este é um app em que é possível cadastrar transações feitas colocando uma c
 
 O app foi criado para aprimorar tecnologias trazidas pelo NextJS, buscando dados no getServerSideProps, cadastrando pelo próprio endpoint desenvolvido com o auxílio do servidor node que roda juntamente com o NextJS e a utilização de rotas dinâmicas para editar e excluir transação, também endpoint dentro do próprio app.
 
+<h3>Inspiração</h3>
+
+Em um Bootcamp da IGTI este foi um desafio proposta como o final e por isso resolvi refaze-lo para praticar algumas tecnologias aprendidas em outro bootcamp (Ignite da Rocketseat).
+
 <h3>Tecnologias Utilizadas</h3>
 - ReactJS </br>
 - NextJS </br>
