@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import Loader from "react-loader-spinner";
+
 import {
   Container,
   SignWrapper,
@@ -18,6 +20,8 @@ import {
   Button,
   Warning,
 } from "./styles-home";
+import { useContext } from "react";
+import { TransactionsContext } from "../contexts/TransactionsContext";
 
 interface ILoginFormInputs {
   email: string;
@@ -32,6 +36,8 @@ const schema = yup.object().shape({
 export default function Home() {
   const router = useRouter();
 
+  const { isLoading, setIsLoading } = useContext(TransactionsContext);
+
   const {
     register,
     handleSubmit,
@@ -42,6 +48,7 @@ export default function Home() {
 
   function handleLogin(event: FormEvent) {
     router.push("/dashboard");
+    setIsLoading(true);
   }
 
   return (
@@ -67,8 +74,13 @@ export default function Home() {
           </InputTextSection>
         </InputTextWrapper>
         <InputButtonWrapper>
-          <Button type="submit">ENTRAR</Button>
-          <Button type="button">CADASTRAR</Button>
+          <Button type="submit">
+            {isLoading ? (
+              <Loader type="Oval" width={20} height={20} color="blue" />
+            ) : (
+              "Entrar"
+            )}
+          </Button>
         </InputButtonWrapper>
       </SignWrapper>
     </Container>

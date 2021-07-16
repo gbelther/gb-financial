@@ -27,15 +27,18 @@ export default function Dashboard({ data }: IDashboardProps) {
   const [showModalTransaction, setShowModalTransaction] = useState(false);
 
   const {
+    isLoading,
     filteredTransactionsByDate,
     filteredTransactions,
     setAllTransactions,
     setFilteredTransactions,
+    setIsLoading,
   } = useContext(TransactionsContext);
 
   useEffect(() => {
     if (data) {
       setAllTransactions(data);
+      setIsLoading(false);
     }
   }, []);
 
@@ -50,6 +53,8 @@ export default function Dashboard({ data }: IDashboardProps) {
 
     setFilteredTransactions(filtered);
   }
+
+  console.log(isLoading);
 
   return (
     <Container>

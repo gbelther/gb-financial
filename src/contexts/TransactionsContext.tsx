@@ -3,9 +3,11 @@ import { createContext, ReactNode } from "react";
 import { ITransaction } from "../../types";
 
 interface ITransactionsContext {
+  isLoading: boolean;
   allTransactions: ITransaction[];
   filteredTransactionsByDate: ITransaction[];
   filteredTransactions: ITransaction[];
+  setIsLoading: (isLoading: boolean) => void;
   setAllTransactions: (transactions: ITransaction[]) => void;
   setFilteredTransactionsByDate: (transactions: ITransaction[]) => void;
   setFilteredTransactions: (transactions: ITransaction[]) => void;
@@ -21,6 +23,8 @@ interface ITransactionsProvider {
 export const TransactionsContext = createContext({} as ITransactionsContext);
 
 export const TransactionsProvider = ({ children }: ITransactionsProvider) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [allTransactions, setAllTransactions] = useState<ITransaction[]>([]);
   const [filteredTransactionsByDate, setFilteredTransactionsByDate] = useState<
     ITransaction[]
@@ -76,9 +80,11 @@ export const TransactionsProvider = ({ children }: ITransactionsProvider) => {
   return (
     <TransactionsContext.Provider
       value={{
+        isLoading,
         allTransactions,
         filteredTransactionsByDate,
         filteredTransactions,
+        setIsLoading,
         setAllTransactions,
         setFilteredTransactionsByDate,
         setFilteredTransactions,
